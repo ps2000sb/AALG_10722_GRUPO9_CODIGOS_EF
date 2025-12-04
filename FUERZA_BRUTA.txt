@@ -1,0 +1,58 @@
+Algoritmo Grupo9_Mochila_FuerzaBruta
+	
+    Definir n, capacidad, mejor_valor, max_subconjuntos Como Entero
+    Definir i, j, peso_actual, valor_actual Como Entero
+    Definir mask, temp_mask, bit Como Entero
+	
+    Escribir "Numero de objetos: "
+    Leer n
+	
+    Dimension pesos[n], valores[n]
+	
+    Para i <- 1 Hasta n
+        Escribir "Peso del objeto ", i, ": "
+        Leer pesos[i]
+		
+        Escribir "Valor del objeto ", i, ": "
+        Leer valores[i]
+    FinPara
+	
+    Escribir "Capacidad de la mochila: "
+    Leer capacidad
+	
+    mejor_valor <- 0
+    max_subconjuntos <- 1
+	
+    Para i <- 1 Hasta n
+        max_subconjuntos <- max_subconjuntos * 2
+    FinPara
+	
+    Para mask <- 0 Hasta max_subconjuntos - 1
+		
+        peso_actual <- 0
+        valor_actual <- 0
+		
+        temp_mask <- mask
+		
+        Para j <- 1 Hasta n
+			
+            bit <- temp_mask MOD 2     ; 
+			
+            Si bit = 1 Entonces
+                peso_actual <- peso_actual + pesos[j]
+                valor_actual <- valor_actual + valores[j]
+            FinSi
+			
+            temp_mask <- TRUNC(temp_mask / 2)
+			
+        FinPara
+		
+        Si peso_actual <= capacidad Y valor_actual > mejor_valor Entonces
+            mejor_valor <- valor_actual
+        FinSi
+		
+    FinPara
+	
+    Escribir "Mejor valor encontrado con Fuerza Bruta: ", mejor_valor
+	
+FinAlgoritmo

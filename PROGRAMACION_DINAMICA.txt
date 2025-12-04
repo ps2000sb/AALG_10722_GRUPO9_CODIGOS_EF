@@ -1,0 +1,78 @@
+Algoritmo Grupo9_Mochila_ProgramacionDinamica
+	
+    Definir n, capacidad Como Entero
+    Definir i, w, peso_i, valor_i Como Entero
+    
+    Escribir "Numero de objetos: "
+    Leer n
+    
+    Dimension pesos[n], valores[n] 
+    
+    Para i <- 1 Hasta n
+        Escribir "Peso del objeto ", i, ": "
+        Leer pesos[i]
+        Escribir "Valor del objeto ", i, ": "
+        Leer valores[i]
+    FinPara
+    
+    Escribir "Capacidad de la mochila: "
+    Leer capacidad
+    
+    Dimension PD[n, capacidad] 
+    
+    
+    Para i <- 1 Hasta n
+        Para w <- 1 Hasta capacidad
+            PD[i, w] <- 0
+        FinPara
+    FinPara
+	
+    i <- 1 
+    peso_i <- pesos[i]
+    valor_i <- valores[i]
+    
+    Para w <- 1 Hasta capacidad
+        Si peso_i <= w Entonces
+            PD[1, w] <- valor_i 
+        Sino
+            PD[1, w] <- 0
+        FinSi
+    FinPara
+	
+    
+    
+    Para i <- 2 Hasta n 
+        
+        peso_i <- pesos[i]
+        valor_i <- valores[i]
+        
+        Para w <- 1 Hasta capacidad 
+            
+            Si peso_i > w Entonces
+                PD[i, w] <- PD[i-1, w] 
+				
+            Sino
+                valor_sin_i <- PD[i-1, w]
+                
+                capacidad_restante <- w - peso_i
+                
+                Si capacidad_restante <= 0 Entonces
+                    
+                    valor_con_i <- valor_i 
+                Sino
+                    
+                    valor_con_i <- valor_i + PD[i-1, capacidad_restante] 
+                FinSi
+                
+                Si valor_sin_i > valor_con_i Entonces
+                    PD[i, w] <- valor_sin_i
+                Sino
+                    PD[i, w] <- valor_con_i
+                FinSi
+            FinSi
+        FinPara
+    FinPara
+
+    Escribir "Mejor valor encontrado con Programación Dinámica: ", PD[n, capacidad]
+	
+FinAlgoritmo
